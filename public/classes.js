@@ -159,7 +159,7 @@ export class Player extends Entity {
     const newY = this.y + this.nextDir.dy;
     // Try to turn if possible
     const canTurn = this.tileMap[newY][newX] !== "X" &&
-      this.tileMap[newY][newX] !== "B" &&
+      this.tileMap[newY][newX] !== "B" && this.tileMap[newY][newX] !== "R" &&
       !entities.some(e => e instanceof Bomb && e.x === newX && e.y === newY);
 
     if (canTurn && (this.nextDir.dx !== this.dir.dx || this.nextDir.dy !== this.dir.dy)) {
@@ -171,7 +171,7 @@ export class Player extends Entity {
     const forwardX = this.x + this.dir.dx;
     const forwardY = this.y + this.dir.dy;
     const canMoveForward = this.tileMap[forwardY][forwardX] !== "X" &&
-      this.tileMap[forwardY][forwardX] !== "B" &&
+      this.tileMap[forwardY][forwardX] !== "B" && this.tileMap[forwardY][forwardX] !== "R" &&
       !entities.some(e => e instanceof Bomb && e.x === forwardX && e.y === forwardY);
 
     if (canMoveForward) {
@@ -279,7 +279,7 @@ export class Enemy extends Entity {
       // Add bomb check
       const bombBlocked = entities.some(e => e instanceof Bomb && e.x === newX && e.y === newY);
 
-      return tileChar !== "X" && tileChar !== "B" && !bombBlocked;
+      return tileChar !== "X" && tileChar !== "B" && tileChar !== "R" && !bombBlocked;
     });
 
 
@@ -411,6 +411,16 @@ function spawnExplosions(x, y, radius, tileMap2D) {
       if (tileChar === "X") break;
 
       entities.push(new Explosion(nx, ny));
+      if (tileChar === "R") {
+        // ✅ update 2D array
+        updateTileMap2D(nx, ny, "B"); // change brick to floor
+        const brickIndex = bricks.findIndex(b => b.x === nx && b.y === ny);
+        if (brickIndex !== -1) {
+          const brick = bricks[brickIndex];
+          brick.tile.className = "tile brick";
+
+        }
+      }
 
       if (tileChar === "B") {
         addScore(15);

@@ -50,6 +50,9 @@ export function buildMap() {
                     brickTile.hiddenItem = { type: "enemy", color: type };
                 }
                 bricks.push(brickTile); // store reference in an array
+            } else if (char === "R") {
+                const brickTile = new Tile(x, y, "red_brick");
+                bricks.push(brickTile); // store reference in an array
             }
             else new Tile(x, y, "floor");
 
@@ -78,7 +81,7 @@ export function buildMap() {
     // After building map & bricks:
 
     const KeyBrick = bricks[Math.floor(Math.random() * bricks.length)];
-    KeyBrick.hiddenItem = "key";  // could also do "port" if you want
+    KeyBrick.hiddenItem = "key";
 }
 
 
