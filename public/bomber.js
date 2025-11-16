@@ -67,10 +67,10 @@ export function buildMap() {
                 case "o": entities.push(new Enemy(x, y, "orange", tileMap2D, COLS, ROWS)); break;
                 case "p": entities.push(new Enemy(x, y, "pink", tileMap2D, COLS, ROWS)); break;
                 case "r": entities.push(new Enemy(x, y, "red", tileMap2D, COLS, ROWS)); break;
-                case "C": case "A": case "M":
+                case "C": case "A": case "M": case "F":
                     const powerUp = new PowerUp(
                         x, y,
-                        char === "C" ? "cherry" : char === "A" ? "apple" : "banana"
+                        char === "C" ? "cherry" : char === "A" ? "apple" : char === "M" ? "banana" : "flake"
                     );
                     entities.push(powerUp);
                     break;

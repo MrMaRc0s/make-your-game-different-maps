@@ -162,6 +162,10 @@ function collision(a, b) {
 
 
 function playerEat(powerUp) {
+
+    if (powerUp.type === "flake") {
+        freezeEnemiesFor7Seconds();
+    }
     PlayPowerUpSound();
     addScore(10);
     player.bombRadius++;   // INCREASE radius
@@ -216,4 +220,19 @@ export function resetFrameTimers() {
     lastFpsUpdate = lastTime;
     fpsCounter = 0;
     fps = 0;
+}
+
+let enemiesFrozen = false;
+
+function freezeEnemiesFor7Seconds() {
+    if (enemiesFrozen) return;
+
+    enemiesFrozen = true;
+
+    entities.forEach(enemy => enemy.frozen = true);
+
+    setTimeout(() => {
+        enemiesFrozen = false;
+        entities.forEach(enemy => enemy.frozen = false);
+    }, 7000);
 }

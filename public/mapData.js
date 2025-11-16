@@ -2,14 +2,14 @@
 // objectives : Key , Port
 // enemies : b,p,o
 // player : P
-// PowerUps : C, A, M
+// PowerUps : C, A, M, F
 // Brick : B(orange),R (red)
 // Wall : X
 
 
 export const tileMap = [
     "XXXXXXXXXXXXXXXXXXX", // top wall
-    "XPR   B  r  B  AEXX", // player top-left, exit top-right, some bricks
+    "XPB   B  r  B  AEXX", // player top-left, exit top-right, some bricks
     "X X X X X X X X X X", // alternating indestructible walls
     "X B   B   B   B   X", // destructible bricks
     "X X X X X X X X X X",
@@ -18,7 +18,7 @@ export const tileMap = [
     "X B   B   B   B   X",
     "X X X XRXRXRX X X X",
     "X   B R     R   B X",
-    "X X X X     X X X X",
+    "X X X X  F  X X X X",
     "X B   R     R X   X",
     "X X X XRXRXRX X X X",
     "X   B X B   B   B X",

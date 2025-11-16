@@ -87,6 +87,10 @@ body {
   background-image: var(--img-banana);
 }
 
+.flake {
+  background-image: url("assets/images/flake.png");
+}
+
 .key {
   background-image: var(--img-key);
 }

@@ -220,6 +220,8 @@ export class Enemy extends Entity {
     this.tileMap = tileMap;
     this.COLS = COLS;
     this.ROWS = ROWS;
+    this.frozen = false;
+
 
     // Invulnerability setup
     this.invulnerable = false;
@@ -239,6 +241,12 @@ export class Enemy extends Entity {
   }
 
   update(delta) {
+
+    // If frozen → skip blinking + movement
+    if (this.frozen) {
+      return;
+    }
+
     // Handle invulnerability blinking
     if (this.invulnerable) {
       this.invulTimer += delta;
@@ -305,6 +313,7 @@ export class Enemy extends Entity {
 export class PowerUp extends Entity {
   constructor(x, y, type) {
     super(x, y, type); // type is the CSS class: "speed", "bomb", "shield"...
+    this.type = type
     this.collected = false;
     this.radius = 1
   }
