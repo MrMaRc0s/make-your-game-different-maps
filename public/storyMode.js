@@ -3,6 +3,7 @@
 import { startStoryGame } from "./main.js";
 import { Continue, Pause, SetGameRunning, showMainMenu } from "./menu.js";
 import { loadGameOver, loadYouWin } from "./videos.js";
+import { leaderboardUI } from './scoreboard.js';
 
 // Intro, development, and ending story screens for Bomber Game
 
@@ -75,21 +76,21 @@ export function showMidStory() {
     game.style.display = "grid";
     SetGameRunning(true);
     Continue();
-
+    
   }
 }
 
-export function showEnding(victory = true) {
+export function showEnding(victory) {
   SetGameRunning(false);
   Pause();
   game.style.display = "none";
 
   //play the video based on victory or defeat
-  if (victory) {
-    loadYouWin();
-  } else {
-    loadGameOver();
-  }
+  // if (victory) {
+  //   loadYouWin();
+  // } else {
+  //   loadGameOver();
+  // }
 
   const checkVideoEnd = () => {
     const videos = document.querySelectorAll("video");
@@ -107,16 +108,17 @@ export function showEnding(victory = true) {
             ? "Zone 01 is restored — your code saved the company from collapse."
             : "Zone 01 falls — the system is lost to the Null Sector."}
             </p>
-            <button id="returnToMenuBtn">Return to Menu</button>
+            <button id="Close">Close</button>
           </div>
         `;
         document.body.appendChild(overlay);
-
-        document.getElementById("returnToMenuBtn").onclick = () => {
-          overlay.remove();
-          game.style.display = "grid";
-          showMainMenu();
-        };
+        
+         document.getElementById("Close").onclick = () => {
+           overlay.remove();
+        //   showMainMenu();
+          leaderboardUI(victory);
+         };
+         
       });
     } else {
       // check again after a short delay

@@ -1,8 +1,9 @@
-import { buildMap, resetGame } from "./bomber.js";
-import { gameLoop, resetTimer, setPausedAt, resetFrameTimers, addPausedDuration } from "./gameLoop.js";
+import { buildMap,resetGame  } from "./bomber.js";
+import { gameLoop, resetTimer,setPausedAt, resetFrameTimers  } from "./gameLoop.js";
 import { startMusic, stopMusic } from "./audio.js";
 import { showIntro } from "./storyMode.js";
 import { runCountdown } from "./countdown.js";
+import { loadAndShowScoreboard } from "./scoreboard.js";
 
 export let gamePaused = true;
 export let gameRunning = false;
@@ -17,6 +18,7 @@ const pauseMenu = document.getElementById("pauseMenu");
 const startBtn = document.getElementById("startBtn");
 const infoBtn = document.getElementById("infoBtn");
 const settingsBtn = document.getElementById("settingsBtn");
+const ldrboardBtn = document.getElementById("leaderboard")
 const quitBtn = document.getElementById("quitBtn");
 
 //PAUSE MENU
@@ -71,6 +73,10 @@ startBtn.onclick = () => {
     showIntro();
 };
 
+ldrboardBtn.onclick = () => {
+    menu.style.display = "none";
+    loadAndShowScoreboard();
+};
 
 infoBtn.onclick = () => {
     SetGameRunning(false);
@@ -103,10 +109,6 @@ backBtn.onclick = () => {
     settingsMenu.style.display = "none";   // hide settings menu    // show main menu again
 };
 
-quitBtn.onclick = () => {
-    window.close();
-};
-
 // Pause menu buttons
 continueBtn.onclick = () => {
     Continue();
@@ -116,6 +118,7 @@ restartBtn.onclick = () => {
 
 };
 mainMenuBtn.onclick = () => {
+    resetGame();
     showMainMenu();
     gameRunning = false;
 };
@@ -123,7 +126,17 @@ mainMenuBtn.onclick = () => {
 
 // pause logic:
 window.addEventListener("keydown", (e) => {
+    const activeEl = document.activeElement;
+    const typingInField =
+      activeEl &&
+      (activeEl.tagName === "INPUT" ||
+       activeEl.tagName === "TEXTAREA" ||
+       activeEl.isContentEditable);
 
+    if (typingInField) {
+      return;
+    }
+    
     if (e.code === "Space") e.preventDefault();
 
     if (e.repeat) return; // ignore if key is held down.   ***
@@ -171,12 +184,11 @@ export function Continue() {
     stopMusic();
 
     runCountdown(() => {
-        addPausedDuration()
+        gamePaused = false;
         SetGameRunning(true);
         resetFrameTimers();
         startMusic();
         hideMenu();
-        gamePaused = false;
     })
 }
 

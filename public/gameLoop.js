@@ -1,10 +1,11 @@
 import { entities, player, difficulty, tileMap2D } from "./bomber.js";
-import { addScore, lives, score, playerHit } from "./gameState.js";
+import { addScore, lives, score, playerHit, difficultyMultiplier } from "./gameState.js";
 import { Player, Bomb, PowerUp, Explosion, Enemy, Objective } from "./classes.js";
 import { gamePaused, animationState } from "./menu.js";
 import { PlayPowerUpSound, PlayLevelClearedSound, stopMusic } from "./audio.js";
 import { loadYouWin } from "./videos.js";
 import { showEnding, showMidStory } from "./storyMode.js";
+import { handleGameOver } from "./scoreboard.js";
 
 
 
@@ -21,6 +22,9 @@ let levelCompleted = false; // track if level is completed
 
 let midStoryShown = false
 
+export function getElapsedMs() {
+    return performance.now() - startTime - totalPausedTime;
+}
 
 export function ResetPort() {
     levelCompleted = false;
@@ -45,18 +49,21 @@ export function gameLoop(time) {
         lastFpsUpdate = time;
         document.getElementById("fps").textContent = `FPS: ${fps}`;
 
+       
     }
-    // Update lives and score
-    document.getElementById("lives").textContent = `Lives: ${lives}`;
-    document.getElementById("score").textContent = `Score: ${score}`;
-    document.getElementById("difficulty").textContent = `Difficulty: ${difficulty}`;
+
+     // Update lives and score
+        document.getElementById("lives").textContent = `Lives: ${lives}`;
+        document.getElementById("score").textContent = `Score: ${score}`;
+        document.getElementById("difficulty").textContent = `Difficulty: ${difficulty}`;
 
 
-    // Update timer
-    const elapsed = Math.floor((time - startTime - totalPausedTime) / 1000); // in seconds
-    const minutes = Math.floor(elapsed / 60);
-    const seconds = elapsed % 60;
-    document.getElementById("timer").textContent = `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        // Update timer
+        const elapsed = Math.floor((time - startTime - totalPausedTime) / 1000); // in seconds
+        const minutes = Math.floor(elapsed / 60);
+        const seconds = elapsed % 60;
+        document.getElementById("timer").textContent = `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+
 
     // 1️⃣ Move player and enemies
     entities.forEach(e => {
@@ -96,6 +103,7 @@ export function gameLoop(time) {
                 e.collected = true;
                 // maybe open the port or mark that player has key
                 player.hasKey = true;
+                
                 // 🔹 Spawn port somewhere random on floor
                 spawnPortRandom();
                 if (!midStoryShown) {
@@ -115,13 +123,13 @@ export function gameLoop(time) {
             // if it’s the port
             if (!levelCompleted && e.el.classList.contains("port") && collision(player.bounds, e.bounds)) {
                 if (player.hasKey) {
+                    difficultyMultiplier();
                     levelCompleted = true;
                     stopMusic();
                     PlayLevelClearedSound();
                     loadYouWin();
                 }
                 showEnding(true);
-
             }
         }
 
@@ -173,10 +181,6 @@ function playerEat(powerUp) {
     powerUp.collected = true; // mark for later removal
 }
 
-
-
-
-
 function spawnPortRandom() {
     if (portSpawned) return; // already spawned → skip
     // Collect all floor positions
@@ -204,7 +208,7 @@ export function setPausedAt() {
 
 export function addPausedDuration() {
     if (pausedAt !== null) {
-        totalPausedTime += performance.now() - pausedAt - 0.7;
+        totalPausedTime += performance.now() - pausedAt;
         pausedAt = null;
     }
 }

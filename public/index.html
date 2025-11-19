@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="bomber.css">
+    <link rel="stylesheet" href="css/bomber.css">
+    <link rel="stylesheet" href="css/leaderboard.css">
+    <link rel="stylesheet" href="css/menu.css">
+    <link rel="stylesheet" href="css/storybox.css">
 
 </head>
 
@@ -17,13 +20,13 @@
             <button id="startBtn">Start</button>
             <button id="infoBtn">Info</button>
             <button id="settingsBtn">Settings</button>
-            <button id="quitBtn">Quit</button>
+            <button id="leaderboard">LeaderBoard</button>
         </div>
         <div id="pauseMenu" class="menu-panel" style="display:none;">
             <h2>Paused</h2>
             <button id="continueBtn">Continue</button>
             <button id="restartBtn">Restart</button>
-            <button id="mainMenuBtn">Main Menu</button>
+            <button id="mainMenuBtn">Quit</button>
             <button id="settingsPauseBtn">Settings</button>
             <button id="infoPauseBtn">Info</button>
         </div>
@@ -33,7 +36,7 @@
         <span id="lives">Lives: 3</span>
         <span id="score">Score: 0</span>
         <span id="timer">Time: 0:00</span>
-        <span id="difficulty">Difficulty: Easy</span>
+        <span id="difficulty">Difficulty: easy</span>
     </div>
     <div id="settingsMenu" class="modal">
         <div class="modal-content">
@@ -41,9 +44,9 @@
             <div class="difficulty">
                 <p class="difficulty-title">Select Difficulty</p>
                 <div class="difficulty-buttons">
-                    <button class="difficultyBtn" data-level="Easy">Easy</button>
-                    <button class="difficultyBtn" data-level="Medium">Medium</button>
-                    <button class="difficultyBtn" data-level="Hard">Hard</button>
+                    <button class="difficultyBtn" data-level="easy">Easy</button>
+                    <button class="difficultyBtn" data-level="medium">Medium</button>
+                    <button class="difficultyBtn" data-level="hard">Hard</button>
                 </div>
             </div>
             <p class="difficulty-title">Adjust volume</p>
@@ -96,6 +99,55 @@
 
 
     <div id="game"></div>
+
+    <!-- Name prompt after game ends -->
+    <div id="namePromptModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Enter your name</h2>
+            <p>Your score will be saved to the global scoreboard.</p>
+            <input id="playerNameInput" type="text" maxlength="16" placeholder="Player name">
+            <div class="modal-actions">
+                <button id="submitScoreBtn">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scoreboard modal -->
+    <div id="scoreboardModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2 id="scoreboardTitle">Scoreboard</h2>
+            <p id="scoreboardMessage"></p>
+            <div class="scoreboard-search">
+                <input
+                  type="text"
+                  id="scoreSearchInput"
+                  placeholder="Search by name..."
+                >
+              </div>
+            <table id="scoreboardTable">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows injected via JS -->
+                </tbody>
+            </table>
+
+            <div class="scoreboard-footer">
+                <button id="scorePrevBtn">&larr; Prev</button>
+                <span id="scorePageLabel">Page 1/1</span>
+                <button id="scoreNextBtn">Next &rarr;</button>
+            </div>
+
+            <button id="scoreCloseBtn">Return To Menu</button>
+        </div>
+    </div>
+
     <script type="module" src="./main.js"></script>
 
 

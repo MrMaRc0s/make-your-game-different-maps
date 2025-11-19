@@ -1,7 +1,7 @@
 import { Player, Enemy, Tile, PowerUp } from "./classes.js";
 import { resetFrameTimers, ResetPort, resetTimer } from "./gameLoop.js";
 import { resetStats } from "./gameState.js";
-import { Continue, Restart } from "./menu.js";
+import { Continue, Restart, gamePaused, gameRunning } from "./menu.js";
 
 
 import { tileMap, getFreshTileMap2D } from "./mapData.js";
@@ -51,7 +51,7 @@ export function buildMap() {
                 }
                 bricks.push(brickTile); // store reference in an array
             } else if (char === "R") {
-                const brickTile = new Tile(x, y, "red_brick");
+                const brickTile = new Tile(x, y, "brick-red");
                 bricks.push(brickTile); // store reference in an array
             }
             else new Tile(x, y, "floor");
@@ -67,10 +67,10 @@ export function buildMap() {
                 case "o": entities.push(new Enemy(x, y, "orange", tileMap2D, COLS, ROWS)); break;
                 case "p": entities.push(new Enemy(x, y, "pink", tileMap2D, COLS, ROWS)); break;
                 case "r": entities.push(new Enemy(x, y, "red", tileMap2D, COLS, ROWS)); break;
-                case "C": case "A": case "M": case "F":
+                case "C": case "A": case "M":
                     const powerUp = new PowerUp(
                         x, y,
-                        char === "C" ? "cherry" : char === "A" ? "apple" : char === "M" ? "banana" : "flake"
+                        char === "C" ? "cherry" : char === "A" ? "apple" : "banana"
                     );
                     entities.push(powerUp);
                     break;
@@ -81,7 +81,7 @@ export function buildMap() {
     // After building map & bricks:
 
     const KeyBrick = bricks[Math.floor(Math.random() * bricks.length)];
-    KeyBrick.hiddenItem = "key";
+    KeyBrick.hiddenItem = "key";  // could also do "port" if you want
 }
 
 
@@ -107,7 +107,7 @@ export function updateTileMap2D(x, y, newChar) {
 
 
 // Define your variable (will change based on click)
-export let difficulty = "Easy";
+export let difficulty = "easy";
 let randomEnemy = 0.1; // default value
 
 // Get all buttons
@@ -120,15 +120,17 @@ buttons.forEach(button => {
         console.log("Difficulty set to:", difficulty);
 
         // Assign values
-        if (difficulty === "Easy") {
+        if (difficulty === "easy") {
             randomEnemy = 0.1;
-        } else if (difficulty === "Medium") {
+        } else if (difficulty === "medium") {
             randomEnemy = 0.2;
-        } else if (difficulty === "Hard") {
+        } else if (difficulty === "hard") {
             randomEnemy = 0.3;
         }
-        Restart()
-        Continue()
+        if (player && (gameRunning || gamePaused)) {
+             Restart()
+            Continue()
+        } 
         settingsMenu.style.display = "none";   // hide settings menu 
 
     });
