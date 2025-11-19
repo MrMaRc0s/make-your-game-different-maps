@@ -1,4 +1,4 @@
-
+import { LEVEL0, LEVEL1, LEVEL2, LEVEL3 } from "./maps.js";
 // objectives : Key , Port
 // enemies : b,p,o
 // player : P
@@ -6,40 +6,36 @@
 // Brick : B(orange),R (red)
 // Wall : X
 
-
-export const tileMap = [
-    "XXXXXXXXXXXXXXXXXXX", // top wall
-    "XPB   B  r  B  AEXX", // player top-left, exit top-right, some bricks
-    "X X X X X X X X X X", // alternating indestructible walls
-    "X B   B   B   B   X", // destructible bricks
-    "X X X X X X X X X X",
-    "X   B   B b B X B X",
-    "X X X X X X X X X X",
-    "X B   B   B   B   X",
-    "X X X XRXRXRX X X X",
-    "X   B R     R   B X",
-    "X X X X  F  X X X X",
-    "X B   R     R X   X",
-    "X X X XRXRXRX X X X",
-    "X   B X B   B   B X",
-    "X X X X X X X X X X",
-    "X B   B o B   B   X",
-    "X X X X X X X X X X",
-    "X   B   B C B   B X",
-    "X X X X X X X X X X",
-    "XXM       X       X", // some power-ups
-    "XXXXXXXXXXXXXXXXXXX"  // bottom wall
+export const LEVEL_MAPS = [
+    LEVEL0,
+    LEVEL1,
+    LEVEL2,
+    LEVEL3 
 ];
 
-export let tileMap2D = tileMap.map(row => row.split(''));
+  let currentLevel = 0;
+  
+  // mutable export so other modules always see the current map
+  export let tileMap = LEVEL_MAPS[currentLevel];
 
-
-// Utility to deep copy the map
-export function getFreshTileMap2D() {
-    // Map2()
-    return tileMap.map(row => row.split(''))
-}
-
+  export function getFreshTileMap2D() {
+    return tileMap.map(row => row.split(""));
+  }
+  
+  export function goToNextLevel() {
+    if (currentLevel >= LEVEL_MAPS.length - 1) {
+      return false; // no more levels
+    }
+    currentLevel++;
+    tileMap = LEVEL_MAPS[currentLevel];
+    return true;
+  }
+  
+  export function resetLevelProgress() {
+    currentLevel = 0;
+    tileMap = LEVEL_MAPS[0];
+  }
+  
 export function Map2() {
 
     // 1. Convert tileMap → mutable 2D array

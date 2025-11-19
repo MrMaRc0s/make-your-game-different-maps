@@ -4,13 +4,13 @@ import { resetStats } from "./gameState.js";
 import { Continue, Restart, gamePaused, gameRunning } from "./menu.js";
 
 
-import { tileMap, getFreshTileMap2D } from "./mapData.js";
+import { tileMap, getFreshTileMap2D, goToNextLevel, resetLevelProgress } from "./mapData.js";
 
 
 
 const game = document.getElementById("game");
-export const ROWS = tileMap.length;
-export const COLS = tileMap[0].length;
+export let ROWS = tileMap.length;
+export let COLS = tileMap[0].length;
 
 game.style.setProperty("--cols", COLS);
 game.style.setProperty("--rows", ROWS);
@@ -24,6 +24,12 @@ export let bricks = [];
 export let tileMap2D = getFreshTileMap2D();
 
 export function buildMap() {
+
+    // Recompute dimensions for the current level
+    ROWS = tileMap.length;
+    COLS = tileMap[0].length;
+    game.style.setProperty("--cols", COLS);
+    game.style.setProperty("--rows", ROWS);
 
     // Reset the live tileMap2D
     tileMap2D = getFreshTileMap2D();
@@ -88,18 +94,29 @@ export function buildMap() {
 // Add this function
 export function resetGame() {
     // Reset all game state variables
-    resetTimer()
-    resetFrameTimers()
-    ResetPort()
-    resetStats()
+    resetTimer();
+    resetFrameTimers();
+    ResetPort();
+    resetStats();
+
+    // 🔹 back to level 0 on full reset
+    resetLevelProgress();
+
     entities.length = 0;
     bricks.length = 0;
     player = null;
     document.getElementById("game").innerHTML = "";
 }
 
+export function loadNextLevel() {
+    const advanced = goToNextLevel();
+    if (!advanced) {
+        return; // no more levels defined
+    }
 
-
+    // Rebuild everything for the new map
+    buildMap();
+}
 
 export function updateTileMap2D(x, y, newChar) {
     tileMap2D[y][x] = newChar;

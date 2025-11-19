@@ -26,20 +26,9 @@ export function addScore(points = 0) {
 
 }
 
-export function difficultyMultiplier(points) {
-    if (difficulty === "easy") {
-        points = points;
-    } else if (difficulty === "medium") {
-        points = points * 1.5;
-    } else {
-        // hard diff
-        points = points * 3;
-    }
-}
-
 export function resetStats() {
     score = 0;
-    lives = 3;
+    lives = 25;
 }
 
 export function playerHit() {

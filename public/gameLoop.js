@@ -1,5 +1,5 @@
-import { entities, player, difficulty, tileMap2D } from "./bomber.js";
-import { addScore, lives, score, playerHit, difficultyMultiplier } from "./gameState.js";
+import { entities, player, difficulty, tileMap2D, loadNextLevel  } from "./bomber.js";
+import { addScore, lives, score, playerHit } from "./gameState.js";
 import { Player, Bomb, PowerUp, Explosion, Enemy, Objective } from "./classes.js";
 import { gamePaused, animationState } from "./menu.js";
 import { PlayPowerUpSound, PlayLevelClearedSound, stopMusic } from "./audio.js";
@@ -21,6 +21,7 @@ let portSpawned = false; // track if we already spawned a port
 let levelCompleted = false; // track if level is completed
 
 let midStoryShown = false
+let keysCollected = 0; // total keys the run
 
 export function getElapsedMs() {
     return performance.now() - startTime - totalPausedTime;
@@ -30,6 +31,7 @@ export function ResetPort() {
     levelCompleted = false;
     portSpawned = false
     midStoryShown = false
+    keysCollected = 0; 
 }
 
 // MAIN GAMELOOP
@@ -98,12 +100,13 @@ export function gameLoop(time) {
         }
         if (e instanceof Objective) {
             // if it’s the key
-            if (e.el.classList.contains("key") && collision(player.bounds, e.bounds)) {
+            if (!e.collected && e.el.classList.contains("key") && collision(player.bounds, e.bounds)) {
                 e.el.remove();
                 e.collected = true;
                 // maybe open the port or mark that player has key
                 player.hasKey = true;
-                
+                keysCollected++;
+
                 // 🔹 Spawn port somewhere random on floor
                 spawnPortRandom();
                 if (!midStoryShown) {
@@ -123,11 +126,19 @@ export function gameLoop(time) {
             // if it’s the port
             if (!levelCompleted && e.el.classList.contains("port") && collision(player.bounds, e.bounds)) {
                 if (player.hasKey) {
-                    difficultyMultiplier();
-                    levelCompleted = true;
-                    stopMusic();
-                    PlayLevelClearedSound();
-                    loadYouWin();
+                    if (keysCollected < 4) {
+                        // 🔹 Go to next map (you define what this does in bomber.js)
+                        portSpawned = false;
+                        levelCompleted = false;
+                        player.hasKey = false;
+                        loadNextLevel();   // swap tileMap, rebuild entities, etc.
+                        return;            // skip end-of-game stuff for intermediate levels
+                    } else {
+                        levelCompleted = true;
+                        stopMusic();
+                        PlayLevelClearedSound();
+                        loadYouWin();
+                    }
                 }
                 showEnding(true);
             }
@@ -151,7 +162,7 @@ export function gameLoop(time) {
 
     // 3️⃣ Remove collected powerups or exploded bombs
     entities.splice(0, entities.length, ...entities.filter(e => {
-        if (e instanceof PowerUp && e.collected) return false;
+        if ((e instanceof PowerUp || e instanceof Objective) && e.collected) return false;
         if (e instanceof Bomb && !document.body.contains(e.el)) return false; // exploded
         return true;
     }));
