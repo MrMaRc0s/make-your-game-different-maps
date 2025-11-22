@@ -10,24 +10,26 @@ import { initScoreboardUI } from "./scoreboard.js";
 
 function applyCssImageVars() {
   const vars = {
-    "--img-wall":        `url(${IMAGE_PATHS.wall})`,
-    "--img-brick":       `url(${IMAGE_PATHS.brick})`,
-    "--img-brick-red":   `url(${IMAGE_PATHS.brickRed})`,
-    "--img-bomber":      `url(${IMAGE_PATHS.bomber})`,
-    "--img-ghost-blue":  `url(${IMAGE_PATHS.ghostBlue})`,
-    "--img-ghost-red":   `url(${IMAGE_PATHS.ghostRed})`,
-    "--img-ghost-pink":  `url(${IMAGE_PATHS.ghostPink})`,
-    "--img-ghost-orange":`url(${IMAGE_PATHS.ghostOrange})`,
-    "--img-cherry":      `url(${IMAGE_PATHS.cherry})`,
-    "--img-apple":       `url(${IMAGE_PATHS.apple})`,
-    "--img-banana":      `url(${IMAGE_PATHS.banana})`,
-    "--img-key":         `url(${IMAGE_PATHS.key})`,
-    "--img-port":        `url(${IMAGE_PATHS.port})`,
-    "--img-bomb":        `url(${IMAGE_PATHS.bomb})`,
-    "--img-explosion":   `url(${IMAGE_PATHS.explosion})`,
-    "--img-bomber-up":    `url(${IMAGE_PATHS.bomberUp})`,
-    "--img-bomber-down":  `url(${IMAGE_PATHS.bomberDown})`,
-    "--img-bomber-left":  `url(${IMAGE_PATHS.bomberLeft})`,
+    "--img-flake": `url(${IMAGE_PATHS.flake})`,
+    "--img-red-brick": `url(${IMAGE_PATHS.red_brick})`,
+    "--img-wall": `url(${IMAGE_PATHS.wall})`,
+    "--img-brick": `url(${IMAGE_PATHS.brick})`,
+    "--img-bomber": `url(${IMAGE_PATHS.bomber})`,
+    "--img-ghost-blue": `url(${IMAGE_PATHS.ghostBlue})`,
+    "--img-ghost-red": `url(${IMAGE_PATHS.ghostRed})`,
+    "--img-ghost-pink": `url(${IMAGE_PATHS.ghostPink})`,
+    "--img-ghost-orange": `url(${IMAGE_PATHS.ghostOrange})`,
+    "--img-cherry": `url(${IMAGE_PATHS.cherry})`,
+    "--img-apple": `url(${IMAGE_PATHS.apple})`,
+    "--img-banana": `url(${IMAGE_PATHS.banana})`,
+    "--img-key": `url(${IMAGE_PATHS.key})`,
+    "--img-port": `url(${IMAGE_PATHS.port})`,
+    "--img-bomb": `url(${IMAGE_PATHS.bomb})`,
+    "--img-explosion": `url(${IMAGE_PATHS.explosion})`,
+    // Optional direction-specific vars if you want to use them:
+    "--img-bomber-up": `url(${IMAGE_PATHS.bomberUp})`,
+    "--img-bomber-down": `url(${IMAGE_PATHS.bomberDown})`,
+    "--img-bomber-left": `url(${IMAGE_PATHS.bomberLeft})`,
     "--img-bomber-right": `url(${IMAGE_PATHS.bomberRight})`
   };
   const root = document.documentElement;
@@ -37,9 +39,9 @@ applyCssImageVars();
 
 window.addEventListener("keydown", (e) => {
   const movementKeys = [
-    "b","B",
-    "ArrowUp","ArrowDown","ArrowLeft","ArrowRight",
-    "w","a","s","d","W","A","S","D"
+    "b", "B",
+    "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
+    "w", "a", "s", "d", "W", "A", "S", "D"
   ];
 
   // 1) If user is typing in an input/textarea/contenteditable → game ignores keys
@@ -47,8 +49,8 @@ window.addEventListener("keydown", (e) => {
   const typingInField =
     activeEl &&
     (activeEl.tagName === "INPUT" ||
-     activeEl.tagName === "TEXTAREA" ||
-     activeEl.isContentEditable);
+      activeEl.tagName === "TEXTAREA" ||
+      activeEl.isContentEditable);
 
   if (typingInField) {
     return;
@@ -99,8 +101,8 @@ initScoreboardUI();
 
 // Link story start to menu’s Start button
 export function startStoryGame() {
-    // Hide menus, then actually start the game
-    const menu = document.getElementById("menu");
-    if (menu) menu.style.display = "none";
-    Restart()
+  // Hide menus, then actually start the game
+  const menu = document.getElementById("menu");
+  if (menu) menu.style.display = "none";
+  Restart()
 };

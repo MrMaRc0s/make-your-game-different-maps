@@ -49,20 +49,20 @@ export function gameLoop(time) {
         lastFpsUpdate = time;
         document.getElementById("fps").textContent = `FPS: ${fps}`;
 
-       
+
     }
 
-     // Update lives and score
-        document.getElementById("lives").textContent = `Lives: ${lives}`;
-        document.getElementById("score").textContent = `Score: ${score}`;
-        document.getElementById("difficulty").textContent = `Difficulty: ${difficulty}`;
+    // Update lives and score
+    document.getElementById("lives").textContent = `Lives: ${lives}`;
+    document.getElementById("score").textContent = `Score: ${score}`;
+    document.getElementById("difficulty").textContent = `Difficulty: ${difficulty}`;
 
 
-        // Update timer
-        const elapsed = Math.floor((time - startTime - totalPausedTime) / 1000); // in seconds
-        const minutes = Math.floor(elapsed / 60);
-        const seconds = elapsed % 60;
-        document.getElementById("timer").textContent = `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+    // Update timer
+    const elapsed = Math.floor((time - startTime - totalPausedTime) / 1000); // in seconds
+    const minutes = Math.floor(elapsed / 60);
+    const seconds = elapsed % 60;
+    document.getElementById("timer").textContent = `Time: ${minutes}:${seconds.toString().padStart(2, '0')}`;
 
 
     // 1️⃣ Move player and enemies
@@ -103,7 +103,7 @@ export function gameLoop(time) {
                 e.collected = true;
                 // maybe open the port or mark that player has key
                 player.hasKey = true;
-                
+
                 // 🔹 Spawn port somewhere random on floor
                 spawnPortRandom();
                 if (!midStoryShown) {
@@ -170,16 +170,28 @@ function collision(a, b) {
 
 
 function playerEat(powerUp) {
+    console.log("Collected type:", powerUp.type);
+
 
     if (powerUp.type === "flake") {
         freezeEnemiesFor7Seconds();
+        PlayPowerUpSound();
+        addScore(20);
+        powerUp.el.remove();
+        powerUp.collected = true; // mark for later removal
+    } else {
+        PlayPowerUpSound();
+        addScore(10);
+        player.bombRadius++;   // INCREASE radius
+        powerUp.el.remove();
+        powerUp.collected = true; // mark for later removal
+
     }
-    PlayPowerUpSound();
-    addScore(10);
-    player.bombRadius++;   // INCREASE radius
-    powerUp.el.remove();
-    powerUp.collected = true; // mark for later removal
 }
+
+
+
+
 
 function spawnPortRandom() {
     if (portSpawned) return; // already spawned → skip
@@ -229,6 +241,7 @@ export function resetFrameTimers() {
 let enemiesFrozen = false;
 
 function freezeEnemiesFor7Seconds() {
+
     if (enemiesFrozen) return;
 
     enemiesFrozen = true;

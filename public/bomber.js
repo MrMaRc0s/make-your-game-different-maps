@@ -51,7 +51,7 @@ export function buildMap() {
                 }
                 bricks.push(brickTile); // store reference in an array
             } else if (char === "R") {
-                const brickTile = new Tile(x, y, "brick-red");
+                const brickTile = new Tile(x, y, "red_brick");
                 bricks.push(brickTile); // store reference in an array
             }
             else new Tile(x, y, "floor");
@@ -67,10 +67,10 @@ export function buildMap() {
                 case "o": entities.push(new Enemy(x, y, "orange", tileMap2D, COLS, ROWS)); break;
                 case "p": entities.push(new Enemy(x, y, "pink", tileMap2D, COLS, ROWS)); break;
                 case "r": entities.push(new Enemy(x, y, "red", tileMap2D, COLS, ROWS)); break;
-                case "C": case "A": case "M":
+                case "C": case "A": case "M": case "F":
                     const powerUp = new PowerUp(
                         x, y,
-                        char === "C" ? "cherry" : char === "A" ? "apple" : "banana"
+                        char === "C" ? "cherry" : char === "A" ? "apple" : char === "M" ? "banana" : "flake"
                     );
                     entities.push(powerUp);
                     break;
@@ -117,7 +117,7 @@ const buttons = document.querySelectorAll(".difficultyBtn");
 buttons.forEach(button => {
     button.addEventListener("click", () => {
         difficulty = button.dataset.level; // "easy", "medium", or "hard"
-        console.log("Difficulty set to:", difficulty);
+        //console.log("Difficulty set to:", difficulty);
 
         // Assign values
         if (difficulty === "easy") {
@@ -128,9 +128,9 @@ buttons.forEach(button => {
             randomEnemy = 0.3;
         }
         if (player && (gameRunning || gamePaused)) {
-             Restart()
+            Restart()
             Continue()
-        } 
+        }
         settingsMenu.style.display = "none";   // hide settings menu 
 
     });

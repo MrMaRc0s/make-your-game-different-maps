@@ -150,10 +150,6 @@ export class Player extends Entity {
     this.bombs.push(bomb);
   }
 
-
-
-
-
   chooseDirection() {
     const newX = this.x + this.nextDir.dx;
     const newY = this.y + this.nextDir.dy;
@@ -182,7 +178,6 @@ export class Player extends Entity {
     }
   }
 
-
   update(delta) {
     // Handle invulnerability blinking
     if (this.invulnerable) {
@@ -204,7 +199,6 @@ export class Player extends Entity {
     this.move(delta);
   }
 
-
   // Call this when player respawns
   activateInvulnerability() {
     this.invulnerable = true;
@@ -221,7 +215,6 @@ export class Enemy extends Entity {
     this.COLS = COLS;
     this.ROWS = ROWS;
     this.frozen = false;
-
 
     // Invulnerability setup
     this.invulnerable = false;
@@ -313,9 +306,9 @@ export class Enemy extends Entity {
 export class PowerUp extends Entity {
   constructor(x, y, type) {
     super(x, y, type); // type is the CSS class: "speed", "bomb", "shield"...
-    this.type = type
     this.collected = false;
     this.radius = 1
+    this.type = type;
   }
 
 }
@@ -338,7 +331,7 @@ export class Bomb extends Entity {
   }
 
   explode() {
-    console.log("💥 Bomb exploded!");
+    // //console.log("💥 Bomb exploded!");
     this.el.remove();
 
     const explosion = new Explosion(this.x, this.y);
@@ -376,7 +369,7 @@ export class Explosion extends Entity {
     }
   }
   explode() {
-    console.log("💥 explosion ended!");
+    //console.log("💥 explosion ended!");
     this.el.remove();
     const index = entities.indexOf(this);
     if (index > -1) {
@@ -420,6 +413,7 @@ function spawnExplosions(x, y, radius, tileMap2D) {
       if (tileChar === "X") break;
 
       entities.push(new Explosion(nx, ny));
+
       if (tileChar === "R") {
         // ✅ update 2D array
         updateTileMap2D(nx, ny, "B"); // change brick to floor
@@ -432,7 +426,7 @@ function spawnExplosions(x, y, radius, tileMap2D) {
       }
 
       if (tileChar === "B") {
-        addScore(15);
+        addScore(10);
 
         // ✅ update 2D array
         updateTileMap2D(nx, ny, " "); // change brick to floor

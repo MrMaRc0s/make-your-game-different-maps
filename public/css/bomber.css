@@ -43,21 +43,70 @@ body {
   align-items: center;
 }
 
-.wall         { background-image: var(--img-wall); }
-.brick        { background-image: var(--img-brick); }
-.brick-red    { background-image: var(--img-brick-red);}
-.bomber       { background-image: var(--img-bomber); }
-.ghost-blue   { background-image: var(--img-ghost-blue); }
-.ghost-red    { background-image: var(--img-ghost-red); }
-.ghost-pink   { background-image: var(--img-ghost-pink); }
-.ghost-orange { background-image: var(--img-ghost-orange); }
-.cherry       { background-image: var(--img-cherry); }
-.apple        { background-image: var(--img-apple); }
-.banana       { background-image: var(--img-banana); }
-.key          { background-image: var(--img-key); }
-.port         { background-image: var(--img-port); }
-.bomb         { background-image: var(--img-bomb); }
-.explosion    { background-image: var(--img-explosion); }
+
+.red_brick {
+  background-image: var(--img-red-brick);
+}
+
+.wall {
+  background-image: var(--img-wall);
+}
+
+.brick {
+  background-image: var(--img-brick);
+}
+
+.bomber {
+  background-image: var(--img-bomber);
+}
+
+.ghost-blue {
+  background-image: var(--img-ghost-blue);
+}
+
+.ghost-red {
+  background-image: var(--img-ghost-red);
+}
+
+.ghost-pink {
+  background-image: var(--img-ghost-pink);
+}
+
+.ghost-orange {
+  background-image: var(--img-ghost-orange);
+}
+
+.cherry {
+  background-image: var(--img-cherry);
+}
+
+.apple {
+  background-image: var(--img-apple);
+}
+
+.banana {
+  background-image: var(--img-banana);
+}
+
+.flake {
+  background-image: var(--img-flake);
+}
+
+.key {
+  background-image: var(--img-key);
+}
+
+.port {
+  background-image: var(--img-port);
+}
+
+.bomb {
+  background-image: var(--img-bomb);
+}
+
+.explosion {
+  background-image: var(--img-explosion);
+}
 
 /* ===== Countdown Overlay ===== */
 .countdown-overlay {
@@ -69,8 +118,8 @@ body {
   font-size: clamp(4rem, 12vw, 10rem);
   color: #fff;
   font-weight: 900;
-  text-shadow: 0 0 20px rgba(0,0,0,0.8);
-  z-index: 9999; 
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  z-index: 9999;
   user-select: none;
 }
 
@@ -79,9 +128,20 @@ body {
 }
 
 @keyframes popIn {
-  0%   { transform: scale(0);   opacity: 0; }
-  40%  { transform: scale(1.3); opacity: 1; }
-  100% { transform: scale(1.0); opacity: 1; }
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  40% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.0);
+    opacity: 1;
+  }
 }
 
 
