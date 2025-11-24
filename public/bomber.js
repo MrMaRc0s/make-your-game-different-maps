@@ -4,7 +4,7 @@ import { resetStats } from "./gameState.js";
 import { Continue, Restart, gamePaused, gameRunning } from "./menu.js";
 
 
-import { tileMap, getFreshTileMap2D } from "./mapData.js";
+import { tileMap, getFreshTileMap2D, changeMap, map1, map2 } from "./mapData.js";
 
 
 
@@ -126,6 +126,10 @@ buttons.forEach(button => {
             randomEnemy = 0.2;
         } else if (difficulty === "hard") {
             randomEnemy = 0.3;
+        } else if (difficulty === "map1") {
+            changeMap(map1);
+        } else if (difficulty === "map2") {
+            changeMap(map2);
         }
         if (player && (gameRunning || gamePaused)) {
             Restart()

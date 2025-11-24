@@ -6,8 +6,7 @@
 
 
 
-
-export const tileMap = [
+export const map2 = [
     "XXXXXXXXXXXXXXXXXXX", // top wall
     "XP  F    r     AE X", // player top-left, exit top-right, some bricks
     "X XBXBXBXBXBXBXBX X", // alternating indestructible walls
@@ -32,29 +31,36 @@ export const tileMap = [
 ]
 
 
-// export const tileMap = [
-//     "XXXXXXXXXXXXXXXXXXX", // top wall
-//     "XP    B  r  B  AEXX", // player top-left, exit top-right, some bricks
-//     "X X X X X X X X X X", // alternating indestructible walls
-//     "X B   B   B   B   X", // destructible bricks
-//     "X X X X X X X X X X",
-//     "X   B   B b B X B X",
-//     "X X X X X X X X X X",
-//     "X B   B   B   B   X",
-//     "X X X X X X X X X X",
-//     "X   B   B p B   B X",
-//     "X X X X X X X X X X",
-//     "X B   B   B   B   X",
-//     "X X X X X X X X X X",
-//     "X   B X B   B   B X",
-//     "X X X X X X X X X X",
-//     "X B   B o B   B   X",
-//     "X X X X X X X X X X",
-//     "X   B   B C B   B X",
-//     "X X X X X X X X X X",
-//     "XXM       X       X", // some power-ups
-//     "XXXXXXXXXXXXXXXXXXX"  // bottom wall
-// ];
+export const map1 = [
+    "XXXXXXXXXXXXXXXXXXX", // top wall
+    "XP    B  r  B  AEXX", // player top-left, exit top-right, some bricks
+    "X X X X X X X X X X", // alternating indestructible walls
+    "X B   B   B   B   X", // destructible bricks
+    "X X X X X X X X X X",
+    "X   B   B b B X B X",
+    "X X X X X X X X X X",
+    "X B   B   B   B   X",
+    "X X X X X X X X X X",
+    "X   B   B p B   B X",
+    "X X X X X X X X X X",
+    "X B   B   B   B   X",
+    "X X X X X X X X X X",
+    "X   B X B   B   B X",
+    "X X X X X X X X X X",
+    "X B   B o B   B   X",
+    "X X X X X X X X X X",
+    "X   B   B C B   B X",
+    "X X X X X X X X X X",
+    "XXM       X       X", // some power-ups
+    "XXXXXXXXXXXXXXXXXXX"  // bottom wall
+];
+
+
+
+
+
+
+export let tileMap = map1
 
 export let tileMap2D = tileMap.map(row => row.split(''));
 
@@ -62,4 +68,9 @@ export let tileMap2D = tileMap.map(row => row.split(''));
 // Utility to deep copy the map
 export function getFreshTileMap2D() {
     return tileMap.map(row => row.split(''))
+}
+
+
+export function changeMap(newMap) {
+    tileMap = newMap;
 }
