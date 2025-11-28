@@ -103,6 +103,11 @@
     cursor: pointer;
     transition: transform 0.2s ease;
   }
+
+  .difficultyBtn.selected {
+    background-color: #365892 !important;
+    transform: scale(1.05);
+  }
   
   .difficultyBtn:hover {
     transform: scale(1.05);
@@ -193,6 +198,41 @@
   #backBtn:hover {
     transform: scale(1.05);
     background-color: #365892;
+  }
+
+  .map-select {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .map-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+  }
+
+  .mapBtn {
+      width: 150px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      border-radius: 6px;
+      background-color: #F2A53E;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+  }
+
+  .mapBtn:hover {
+      transform: scale(1.05);
+      background-color: #365892;
+  }
+
+  .mapBtn.selected {
+      background-color: #365892 !important;
+      transform: scale(1.05);
   }
   
   
@@ -292,3 +332,5 @@
     transform: scale(1.05);
     background-color: #365892;
   }
+
+

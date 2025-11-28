@@ -6,6 +6,8 @@ import { player } from './bomber.js';
 import { IMAGE_PATHS } from "./config/paths.js";
 
 import { initScoreboardUI } from "./scoreboard.js";
+import { initMapMenuInSettings } from "./mapMenu.js";
+import { initDifficultyMenu } from "./difficultyMenu.js";
 
 
 function applyCssImageVars() {
@@ -98,6 +100,11 @@ showMainMenu();
 
 // Initialize scoreboard UI
 initScoreboardUI();
+
+// Initialize difficulty selection menu
+initDifficultyMenu();
+// Initialize map selection menu
+initMapMenuInSettings();
 
 // Link story start to menu’s Start button
 export function startStoryGame() {

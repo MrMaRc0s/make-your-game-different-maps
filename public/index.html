@@ -30,6 +30,12 @@
             <button id="settingsPauseBtn">Settings</button>
             <button id="infoPauseBtn">Info</button>
         </div>
+        <div id="mapMenu" class="menu-panel" style="display:none;">
+            <h2>Select Map</h2>
+            <div id="mapList"></div>
+            <button id="backToMenu">Back</button>
+
+        </div>
     </div>
     <div id="hud">
         <span id="fps">FPS: 0</span>
@@ -49,6 +55,12 @@
                     <button class="difficultyBtn" data-level="hard">Hard</button>
                 </div>
             </div>
+
+            <div class="map-select">
+                <p class="difficulty-title">Select Map</p>
+                <div id="mapButtons" class="map-buttons"></div>
+            </div>
+
             <p class="difficulty-title">Adjust volume</p>
             <div class="audio-settings">
                 <button id="muteBtn">

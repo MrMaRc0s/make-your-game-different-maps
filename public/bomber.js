@@ -4,13 +4,15 @@ import { resetStats } from "./gameState.js";
 import { Continue, Restart, gamePaused, gameRunning } from "./menu.js";
 
 
-import { tileMap, getFreshTileMap2D } from "./mapData.js";
+import { getFreshMap } from "./mapData.js";
 
 
 
 const game = document.getElementById("game");
-export const ROWS = tileMap.length;
-export const COLS = tileMap[0].length;
+export let selectedMap = localStorage.getItem("selectedMap") || "default";
+export let tileMap2D = getFreshMap(selectedMap);
+export let ROWS = tileMap2D.length;
+export let COLS = tileMap2D[0].length;
 
 game.style.setProperty("--cols", COLS);
 game.style.setProperty("--rows", ROWS);
@@ -21,22 +23,32 @@ export let entities = [];
 export let player = null;
 export let bricks = [];
 
-export let tileMap2D = getFreshTileMap2D();
 
 export function buildMap() {
 
-    // Reset the live tileMap2D
-    tileMap2D = getFreshTileMap2D();
+    //take the selected map from localStorage
+    selectedMap = localStorage.getItem("selectedMap") || "default";
+    // Load the fresh selected map
+    tileMap2D = getFreshMap(selectedMap);
 
+    // Update dimensions
+    ROWS = tileMap2D.length;
+    COLS = tileMap2D[0].length;
+
+    game.style.setProperty("--cols", COLS);
+    game.style.setProperty("--rows", ROWS);
+
+    // Reset previous entities
     entities.length = 0;
     bricks.length = 0;
     player = null;
     document.getElementById("game").innerHTML = "";
 
-    // Build map
+    // Build the map
     for (let y = 0; y < ROWS; y++) {
         for (let x = 0; x < COLS; x++) {
-            const char = tileMap[y][x];
+
+            const char = tileMap2D[y][x];
 
             // Tiles
             if (char === "X") new Tile(x, y, "wall");
@@ -116,6 +128,7 @@ const buttons = document.querySelectorAll(".difficultyBtn");
 // Loop through and add event listeners
 buttons.forEach(button => {
     button.addEventListener("click", () => {
+        if (gameRunning && gamePaused) return;
         difficulty = button.dataset.level; // "easy", "medium", or "hard"
         //console.log("Difficulty set to:", difficulty);
 
