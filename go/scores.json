@@ -79,6 +79,12 @@
       "created_at": "2025-11-19T18:00:23.715892Z"
     },
     {
+      "name": "paok",
+      "score": 200,
+      "time_ms": 34889,
+      "created_at": "2025-11-29T11:22:15.11557886Z"
+    },
+    {
       "name": "test2",
       "score": 165,
       "time_ms": 17016,
