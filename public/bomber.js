@@ -128,13 +128,8 @@ buttons.forEach(button => {
         difficulty = button.dataset.level; // "easy", "medium", or "hard"
         console.log("Difficulty set to:", difficulty);
 
-        // Assign values
-        if (difficulty === "easy") {
-            randomEnemy = 0.1;
-        } else if (difficulty === "medium") {
-            randomEnemy = 0.2;
-        } else if (difficulty === "hard") {
-            randomEnemy = 0.3;
+        if (!player) {
+            applyDifficulty();
         }
         // Mark that there are unsaved changes
         pendingChanges = true;
@@ -143,26 +138,50 @@ buttons.forEach(button => {
     });
 });
 
+function applyDifficulty() {
+    // Assign values
+    if (difficulty === "easy") {
+        randomEnemy = 0.1;
+    } else if (difficulty === "medium") {
+        randomEnemy = 0.2;
+    } else if (difficulty === "hard") {
+        randomEnemy = 0.3;
+    }
+}
+
+
+
+
 export let map = "map1";
 const mapButtons = document.querySelectorAll(".mapBtn");
-// Loop through and add event listeners
+
+
 mapButtons.forEach(button => {
     button.addEventListener("click", () => {
         map = button.dataset.map;
         console.log(map)
 
-        if (map === "map1") {
-            changeMap(map1);
-        } else if (map === "map2") {
-            changeMap(map2);
+        if (!player) {
+            applyMap();
         }
-        // Just show the apply button, do not restart yet
+
+
         pendingChanges = true;
         applyButton.style.display = "block";
 
     });
 })
 
+
+function applyMap() {
+    if (map === "map1") {
+        changeMap(map1);
+    } else if (map === "map2") {
+        changeMap(map2);
+    } else if (map === "map3") {
+        changeMap(map3)
+    }
+}
 
 applyButton.addEventListener("click", () => {
     if (!pendingChanges) return;
@@ -183,13 +202,10 @@ applyButton.addEventListener("click", () => {
 confirmApply.addEventListener("click", () => {
     confirmModal.style.display = "none";
 
-    // Apply map now
-    if (map === "map1") changeMap(map1);
-    if (map === "map2") changeMap(map2);
-    if (map === "map3") changeMap(map3);
 
-    // Restart only if player exists
     if (player) {
+        applyDifficulty();
+        applyMap();
         Restart();
         Continue();
     }

@@ -76,7 +76,7 @@ export function showMidStory() {
     game.style.display = "grid";
     SetGameRunning(true);
     Continue();
-    
+
   }
 }
 
@@ -106,13 +106,13 @@ export function showEnding(victory) {
           </div>
         `;
         document.body.appendChild(overlay);
-        
-         document.getElementById("Close").onclick = () => {
-           overlay.remove();
-        //   showMainMenu();
+
+        document.getElementById("Close").onclick = () => {
+          overlay.remove();
+          //   showMainMenu();
           leaderboardUI(victory);
-         };
-         
+        };
+
       });
     } else {
       // check again after a short delay
