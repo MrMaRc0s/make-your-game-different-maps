@@ -65,6 +65,8 @@
                 </button>
                 <input type="range" id="volumeSlider" min="0" max="100" value="50">
             </div>
+            <button id="applyChangesBtn" style="display:none;">Apply Changes</button>
+
             <button id="backBtn">Back</button>
         </div>
     </div>
@@ -150,6 +152,13 @@
             </div>
 
             <button id="scoreCloseBtn">Return To Menu</button>
+        </div>
+    </div>
+    <div id="confirmModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <p>Applying these settings will restart the game. Continue?</p>
+            <button id="confirmApply">Yes</button>
+            <button id="cancelApply">No</button>
         </div>
     </div>
 

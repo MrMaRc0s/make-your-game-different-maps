@@ -3,6 +3,7 @@ import { showMainMenu } from "./menu.js";
 import { submitScore, fetchScores } from "./scoreApi.js";
 import { getElapsedMs } from './gameLoop.js';
 import { score as currentScore } from "./gameState.js";
+import { resetGame } from "./bomber.js";
 
 let pendingGameResult = null; // { score, timeMs, didWin }
 let currentPage = 1;
@@ -45,7 +46,7 @@ export function initScoreboardUI() {
     console.warn("Scoreboard modals not found in DOM.");
     return;
   }
-  
+
   submitBtn.addEventListener("click", async () => {
     const name = nameInput.value.trim() || "Anonymous";
     if (!pendingGameResult) return;
@@ -74,24 +75,24 @@ export function initScoreboardUI() {
   closeBtn.addEventListener("click", () => {
     // Hide modal
     scoreboardModal.style.display = "none";
-  
+
     // Reset search state
     currentSearchTerm = "";
     const searchInput = document.getElementById("scoreSearchInput");
     if (searchInput) {
       searchInput.value = "";
     }
-  
+
     // Reset pagination state
     currentPage = 1;
     lastPageInfo = { page: 1, totalPages: 1 };
-  
+
     // Force a fresh fetch next time
     allScoresLoaded = false;
-  
+    resetGame()
     showMainMenu();
   });
-  
+
   prevBtn.addEventListener("click", async () => {
     // SEARCH MODE: paginate client-side only
     if (currentSearchTerm) {
@@ -101,27 +102,27 @@ export function initScoreboardUI() {
       }
       return;
     }
-  
+
     // NORMAL MODE: server paging
     if (currentPage > 1) {
       currentPage--;
       await loadAndShowScoreboard(false); // no message change
     }
   });
-  
+
   nextBtn.addEventListener("click", async () => {
     // SEARCH MODE: paginate client-side only
     if (currentSearchTerm) {
       const filtered = getFilteredSearchScores();
       const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
-  
+
       if (currentPage < totalPages) {
         currentPage++;
         renderScoreRows({ page: currentPage, totalPages }, true); // useAllScores = true
       }
       return;
     }
-  
+
     // NORMAL MODE: server paging
     currentPage++;
     const changed = await loadAndShowScoreboard(false);
@@ -136,13 +137,13 @@ export function initScoreboardUI() {
     nameInput.value = "";
     nameInput.focus();
   }
-  
+
   const searchInput = document.getElementById("scoreSearchInput");
 
   if (searchInput) {
     searchInput.addEventListener("input", async () => {
       currentSearchTerm = searchInput.value.trim().toLowerCase();
-  
+
       if (currentSearchTerm) {
         // Load all pages once, then filter in-memory
         await getAllScores();
@@ -202,30 +203,30 @@ export async function loadAndShowScoreboard(updateMessage = true) {
     const data = await fetchScores(currentPage, PER_PAGE);
     const { page, total_pages, scores } = data;
 
-        // If we asked past the last page, signal "no change"
-        if (total_pages > 0 && requestedPage > total_pages) {
-          return false;
-        }
-    
-        // Use the effective page (server might clamp later if you fix backend)
-        const effectivePage = Math.min(page, total_pages || 1);
-        currentPage = effectivePage;
+    // If we asked past the last page, signal "no change"
+    if (total_pages > 0 && requestedPage > total_pages) {
+      return false;
+    }
+
+    // Use the effective page (server might clamp later if you fix backend)
+    const effectivePage = Math.min(page, total_pages || 1);
+    currentPage = effectivePage;
 
     if (total_pages === 0) {
       // nothing yet
       tbody.innerHTML = "<tr><td colspan='4'>No scores yet.</td></tr>";
       pageLabel.textContent = "Page 0/0";
-   } else {
+    } else {
       currentScoresPage = scores.map((s, idx) => ({
         ...s,
         _rank: (effectivePage - 1) * PER_PAGE + idx + 1,
       }));
-    
+
       lastPageInfo = { page: effectivePage, totalPages: total_pages };
       allScoresLoaded = false; // scores may have changed, reset cache
       renderScoreRows(lastPageInfo);
     }
-    
+
 
     if (updateMessage && lastSubmitInfo && pendingGameResult) {
       const { name, rank, percentile } = lastSubmitInfo;
@@ -332,7 +333,7 @@ export function handleGameOver(finalScore, totalTimeMs, didWin) {
     timeMs: roundedTimeMs,
     didWin
   };
-  
+
   if (!didWin) {
     loadAndShowScoreboard();
     return;
@@ -347,9 +348,9 @@ export function handleGameOver(finalScore, totalTimeMs, didWin) {
 
 export function leaderboardUI(result) {
   if (result === false) {
-      const totalTimeMs = getElapsedMs();
-      // didWin = false
-      handleGameOver(currentScore, totalTimeMs, false);
+    const totalTimeMs = getElapsedMs();
+    // didWin = false
+    handleGameOver(currentScore, totalTimeMs, false);
   } else {
     const totalTimeMs = getElapsedMs();
     handleGameOver(currentScore, totalTimeMs, true);

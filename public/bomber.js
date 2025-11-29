@@ -106,6 +106,15 @@ export function updateTileMap2D(x, y, newChar) {
 }
 
 
+let pendingChanges = false;
+
+const applyButton = document.getElementById("applyChangesBtn");
+const confirmModal = document.getElementById("confirmModal");
+const confirmApply = document.getElementById("confirmApply");
+const cancelApply = document.getElementById("cancelApply");
+
+
+
 // Define your variable (will change based on click)
 export let difficulty = "easy";
 let randomEnemy = 0.1; // default value
@@ -127,11 +136,9 @@ buttons.forEach(button => {
         } else if (difficulty === "hard") {
             randomEnemy = 0.3;
         }
-        if (player && (gameRunning || gamePaused)) {
-            Restart()
-            Continue()
-        }
-        settingsMenu.style.display = "none";   // hide settings menu 
+        // Mark that there are unsaved changes
+        pendingChanges = true;
+        applyButton.style.display = "block";
 
     });
 });
@@ -149,11 +156,49 @@ mapButtons.forEach(button => {
         } else if (map === "map2") {
             changeMap(map2);
         }
-        if (player && (gameRunning || gamePaused)) {
-            Restart()
-            Continue()
-        }
-        settingsMenu.style.display = "none";   // hide settings menu 
+        // Just show the apply button, do not restart yet
+        pendingChanges = true;
+        applyButton.style.display = "block";
 
     });
 })
+
+
+applyButton.addEventListener("click", () => {
+    if (!pendingChanges) return;
+
+    // If no player exists yet → FIRST TIME IN MENU
+    if (!player) {
+        // Just accept the settings, no modal and no restart
+        pendingChanges = false;
+        applyButton.style.display = "none";
+        settingsMenu.style.display = "none";
+        return;
+    }
+
+    // If player exists → show modal (changing settings forces restart)
+    confirmModal.style.display = "block";
+});
+
+confirmApply.addEventListener("click", () => {
+    confirmModal.style.display = "none";
+
+    // Apply map now
+    if (map === "map1") changeMap(map1);
+    if (map === "map2") changeMap(map2);
+    if (map === "map3") changeMap(map3);
+
+    // Restart only if player exists
+    if (player) {
+        Restart();
+        Continue();
+    }
+
+    pendingChanges = false;
+    applyButton.style.display = "none";
+    settingsMenu.style.display = "none";
+});
+
+cancelApply.addEventListener("click", () => {
+    confirmModal.style.display = "none";
+});
