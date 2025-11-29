@@ -117,7 +117,7 @@ const buttons = document.querySelectorAll(".difficultyBtn");
 buttons.forEach(button => {
     button.addEventListener("click", () => {
         difficulty = button.dataset.level; // "easy", "medium", or "hard"
-        //console.log("Difficulty set to:", difficulty);
+        console.log("Difficulty set to:", difficulty);
 
         // Assign values
         if (difficulty === "easy") {
@@ -126,10 +126,6 @@ buttons.forEach(button => {
             randomEnemy = 0.2;
         } else if (difficulty === "hard") {
             randomEnemy = 0.3;
-        } else if (difficulty === "map1") {
-            changeMap(map1);
-        } else if (difficulty === "map2") {
-            changeMap(map2);
         }
         if (player && (gameRunning || gamePaused)) {
             Restart()
@@ -139,3 +135,25 @@ buttons.forEach(button => {
 
     });
 });
+
+export let map = "map1";
+const mapButtons = document.querySelectorAll(".mapBtn");
+// Loop through and add event listeners
+mapButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        map = button.dataset.map;
+        console.log(map)
+
+        if (map === "map1") {
+            changeMap(map1);
+        } else if (map === "map2") {
+            changeMap(map2);
+        }
+        if (player && (gameRunning || gamePaused)) {
+            Restart()
+            Continue()
+        }
+        settingsMenu.style.display = "none";   // hide settings menu 
+
+    });
+})

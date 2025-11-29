@@ -1,4 +1,4 @@
-import { entities, player, difficulty, tileMap2D } from "./bomber.js";
+import { entities, player, difficulty, tileMap2D, map } from "./bomber.js";
 import { addScore, lives, score, playerHit, difficultyMultiplier } from "./gameState.js";
 import { Player, Bomb, PowerUp, Explosion, Enemy, Objective } from "./classes.js";
 import { gamePaused, animationState } from "./menu.js";
@@ -56,6 +56,7 @@ export function gameLoop(time) {
     document.getElementById("lives").textContent = `Lives: ${lives}`;
     document.getElementById("score").textContent = `Score: ${score}`;
     document.getElementById("difficulty").textContent = `Difficulty: ${difficulty}`;
+    document.getElementById("Map").textContent = `Map: ${map}`;
 
 
     // Update timer
