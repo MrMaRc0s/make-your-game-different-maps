@@ -68,8 +68,20 @@
     border-radius: 10px;
     text-align: center;
     min-width: 300px;
+    position: relative;
   }
   
+  #settingsMenu .settings-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    width: 100%;
+    margin-top: 20px;
+    position: relative;
+  }
+
+
   .difficulty {
     margin: 15px 0;
     display: flex;
@@ -207,38 +219,36 @@
     width: 150px;
   }
   
+  #applyChangesBtn,
   #backBtn {
-    margin-top: 10px;
     padding: 10px 20px;
+    font-size: 16px;
     border: none;
     border-radius: 6px;
-    background-color: #F2A53E;
-    color: white;
-    font-size: 16px;
     cursor: pointer;
     transition: transform 0.2s ease;
   }
-  
+
+  #backBtn {
+    background-color: #F2A53E;
+    color: white;
+    margin-right: 70px;
+  }
+
   #backBtn:hover {
     transform: scale(1.05);
     background-color: #365892;
   }
 
   #applyChangesBtn {
-    margin-top: 10px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
     background-color: #10792f;
     color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+    margin-right: 100px; 
   }
-  
+
   #applyChangesBtn:hover {
     transform: scale(1.05);
-    background-color: #365892;
+    background-color: #12b041;
   }
   
   #volumeSlider {
@@ -359,3 +369,63 @@
     transform: scale(1.05);
     background-color: #365892;
   }
+
+  #confirmModal {
+    display: none;
+    /* hidden until you open it */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    /* dark overlay */
+    z-index: 2000;
+    /* make sure it’s above your game */
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Popup box */
+  #confirmModal .modal-content {
+    background: #666;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 300px;
+  }
+
+  #confirmApply {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #10792f;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  #confirmApply:hover {
+    transform: scale(1.05);
+    background-color: #12b041;
+  }
+
+  #cancelApply {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #d00000;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  #cancelApply:hover {
+    transform: scale(1.05);
+    background-color: #ff0000;
+  }
+

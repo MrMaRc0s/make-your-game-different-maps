@@ -128,12 +128,19 @@ buttons.forEach(button => {
         difficulty = button.dataset.level; // "easy", "medium", or "hard"
         console.log("Difficulty set to:", difficulty);
 
+        // remove highlight from all buttons
+        document.querySelectorAll(".difficultyBtn")
+            .forEach(btn => btn.classList.remove("selected"));
+
+        // highlight selected button
+        button.classList.add("selected");
+
         if (!player) {
             applyDifficulty();
         }
         // Mark that there are unsaved changes
         pendingChanges = true;
-        applyButton.style.display = "block";
+        applyButton.style.display = "flex";
 
     });
 });
@@ -161,13 +168,18 @@ mapButtons.forEach(button => {
         map = button.dataset.map;
         console.log(map)
 
+        document.querySelectorAll(".mapBtn")
+            .forEach(btn => btn.classList.remove("selected"));
+
+        button.classList.add("selected");
+
         if (!player) {
             applyMap();
         }
 
 
         pendingChanges = true;
-        applyButton.style.display = "block";
+        applyButton.style.display = "flex";
 
     });
 })
@@ -196,7 +208,7 @@ applyButton.addEventListener("click", () => {
     }
 
     // If player exists → show modal (changing settings forces restart)
-    confirmModal.style.display = "block";
+    confirmModal.style.display = "flex";
 });
 
 confirmApply.addEventListener("click", () => {
