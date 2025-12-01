@@ -4,7 +4,7 @@ import { resetStats } from "./gameState.js";
 import { Continue, Restart, gamePaused, gameRunning } from "./menu.js";
 
 
-import { tileMap, getFreshTileMap2D, changeMap, map1, map2 } from "./mapData.js";
+import { tileMap, getFreshTileMap2D, changeMap, map1, map2, map3 } from "./mapData.js";
 
 
 
@@ -158,14 +158,15 @@ function applyDifficulty() {
 
 
 
-
 export let map = "map1";
+export let mapDisplayName = "NOT A MIRROR";
 const mapButtons = document.querySelectorAll(".mapBtn");
 
 
 mapButtons.forEach(button => {
     button.addEventListener("click", () => {
         map = button.dataset.map;
+        mapDisplayName = button.textContent.trim();
         console.log(map)
 
         document.querySelectorAll(".mapBtn")

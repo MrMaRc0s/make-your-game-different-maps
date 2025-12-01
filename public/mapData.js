@@ -4,7 +4,29 @@
 // player : P
 // PowerUps : C, A, M
 
-
+export const map3 = [
+    "XXXXXXXXXXXXXXXXXXX",
+    "XP   B  R    o  AEX",
+    "X XRX XBXRXRX XRX X",
+    "X B   B   r   B   X",
+    "X XBX XRXRX XBX X X",
+    "X   R   o   R   B X",
+    "XRX XRX XRX XRX XRX",
+    "X B   B  F  B   B X",
+    "X XRX XRXRX XRX X X",
+    "X B   r   B   o   X",
+    "X X XRX XRX XRX X X",
+    "X R   B   p   B   X",
+    "X XRX XRXRX XRX X X",
+    "X B   o   B   r   X",
+    "X XRX XRX XRX XRX X",
+    "X   B   R F R   B X",
+    "XRX XRXRX XBXRX X X",
+    "X B   B   C   B   X",
+    "X XRX XBXRXBX XRX X",
+    "X   M     B     A X",
+    "XXXXXXXXXXXXXXXXXXX"
+];
 
 export const map2 = [
     "XXXXXXXXXXXXXXXXXXX", // top wall
