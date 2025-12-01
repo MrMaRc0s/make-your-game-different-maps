@@ -103,8 +103,58 @@
     cursor: pointer;
     transition: transform 0.2s ease;
   }
+
+  .difficultyBtn.selected {
+    background-color: #365892 !important;
+    transform: scale(1.05);
+  }
   
   .difficultyBtn:hover {
+    transform: scale(1.05);
+    background-color: #365892;
+  }
+
+  /* Select map */
+  .map {
+    margin: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .map-title {
+    color: rgb(0, 0, 0);
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  .map-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .mapBtn {
+    width: 150px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background-color: #F2A53E;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+
+  .mapBtn.selected {
+    background-color: #365892 !important;
+    transform: scale(1.05);
+  }
+  
+  .mapBtn:hover {
     transform: scale(1.05);
     background-color: #365892;
   }
@@ -170,6 +220,23 @@
   }
   
   #backBtn:hover {
+    transform: scale(1.05);
+    background-color: #365892;
+  }
+
+  #applyChangesBtn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #10792f;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  #applyChangesBtn:hover {
     transform: scale(1.05);
     background-color: #365892;
   }
