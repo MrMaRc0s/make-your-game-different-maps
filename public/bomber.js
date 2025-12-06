@@ -4,7 +4,7 @@ import { resetStats } from "./gameState.js";
 import { Continue, Restart, gamePaused, gameRunning } from "./menu.js";
 
 
-import { tileMap, getFreshTileMap2D, changeMap, resetLevelProgress} from "./mapData.js";
+import { tileMap, getFreshTileMap2D, changeMap, resetLevelProgress, goToNextLevel } from "./mapData.js";
 
 
 
@@ -111,7 +111,15 @@ export function resetGame() {
     document.getElementById("game").innerHTML = "";
 }
 
+export function loadNextLevel() {
+    const advanced = goToNextLevel();
+    if (!advanced) {
+        return; // no more levels defined
+    }
 
+    // Rebuild everything for the new map
+    buildMap();
+}
 
 
 export function updateTileMap2D(x, y, newChar) {

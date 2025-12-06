@@ -1,4 +1,4 @@
-import { entities, player, difficulty, tileMap2D, allmaps, mapDisplayName } from "./bomber.js";
+import { entities, player, difficulty, tileMap2D, allmaps, mapDisplayName, loadNextLevel } from "./bomber.js";
 import { addScore, lives, score, playerHit, difficultyMultiplier } from "./gameState.js";
 import { Player, Bomb, PowerUp, Explosion, Enemy, Objective } from "./classes.js";
 import { gamePaused, animationState } from "./menu.js";
@@ -31,7 +31,7 @@ export function ResetPort() {
     levelCompleted = false;
     portSpawned = false
     midStoryShown = false
-    keysCollected = 0; 
+    keysCollected = 0;
 }
 
 // MAIN GAMELOOP
@@ -115,7 +115,7 @@ export function gameLoop(time) {
                     midStoryShown = true;
                     showMidStory();  // showMidStory itself checks allmaps
                 }
-                
+
                 // Speed up all enemies (both modes)
                 entities.forEach(en => {
                     if (en instanceof Enemy) {
@@ -136,7 +136,7 @@ export function gameLoop(time) {
                         loadNextLevel();   // swap tileMap, rebuild entities, etc.
                         return;            // skip end-of-game stuff for intermediate levels
                     }
-            
+
                     //  Single-map mode OR last map in story -> finish run
                     levelCompleted = true;
                     stopMusic();

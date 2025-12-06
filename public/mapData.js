@@ -1,4 +1,4 @@
-import { LEVEL0, LEVEL1, LEVEL2, LEVEL3 } from "./maps.js";
+import { LEVEL1, LEVEL2, LEVEL3 } from "./maps.js";
 // objectives : Key , Port
 // enemies : b,p,o
 // player : P
@@ -7,35 +7,34 @@ import { LEVEL0, LEVEL1, LEVEL2, LEVEL3 } from "./maps.js";
 // Wall : X
 
 export const LEVEL_MAPS = [
-    LEVEL0,
     LEVEL1,
     LEVEL2,
-    LEVEL3 
+    LEVEL3
 ];
 
-  let currentLevel = 0;
-  
-  // mutable export so other modules always see the current map
-  export let tileMap = LEVEL_MAPS[currentLevel];
+let currentLevel = 0;
 
-  export function getFreshTileMap2D() {
+// mutable export so other modules always see the current map
+export let tileMap = LEVEL_MAPS[currentLevel];
+
+export function getFreshTileMap2D() {
     return tileMap.map(row => row.split(""));
-  }
-  
-  export function goToNextLevel() {
+}
+
+export function goToNextLevel() {
     if (currentLevel >= LEVEL_MAPS.length - 1) {
-      return false; // no more levels
+        return false; // no more levels
     }
     currentLevel++;
     tileMap = LEVEL_MAPS[currentLevel];
     return true;
-  }
-  
-  export function resetLevelProgress() {
+}
+
+export function resetLevelProgress() {
     currentLevel = 0;
     tileMap = LEVEL_MAPS[0];
-  }
-  
+}
+
 export function Map2() {
 
     // 1. Convert tileMap → mutable 2D array

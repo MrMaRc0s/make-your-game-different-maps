@@ -97,10 +97,22 @@
       "created_at": "2025-11-29T11:22:15.11557886Z"
     },
     {
+      "name": "Anonymous",
+      "score": 190,
+      "time_ms": 34815,
+      "created_at": "2025-12-06T12:55:45.169077384Z"
+    },
+    {
       "name": "test2",
       "score": 165,
       "time_ms": 17016,
       "created_at": "2025-11-16T19:15:34.020607029Z"
+    },
+    {
+      "name": "Anonymous",
+      "score": 50,
+      "time_ms": 17142,
+      "created_at": "2025-12-06T12:55:00.414138822Z"
     },
     {
       "name": "eeeee",
