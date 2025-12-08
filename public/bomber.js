@@ -1,10 +1,12 @@
 import { Player, Enemy, Tile, PowerUp } from "./classes.js";
 import { resetFrameTimers, ResetPort, resetTimer } from "./gameLoop.js";
-import { resetStats } from "./gameState.js";
+import { resetStats, getLives } from "./gameState.js";
 import { Continue, Restart, gamePaused, gameRunning } from "./menu.js";
 
 
+
 import { tileMap, getFreshTileMap2D, changeMap, resetLevelProgress, goToNextLevel } from "./mapData.js";
+import { runCountdown } from "./countdown.js";
 
 
 
@@ -116,8 +118,12 @@ export function loadNextLevel() {
     if (!advanced) {
         return; // no more levels defined
     }
+    
 
+    
+    Continue(); // unpause the game
     // Rebuild everything for the new map
+    getLives(); // extra life for completing level
     buildMap();
 }
 

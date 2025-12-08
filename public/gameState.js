@@ -62,3 +62,7 @@ export function playerHit() {
         player.activateInvulnerability();
     }
 }
+
+export function getLives() {
+    lives++
+}
